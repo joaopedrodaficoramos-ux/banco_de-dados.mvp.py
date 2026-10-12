@@ -1,0 +1,22 @@
+// Medidas propostas para aplicar à tabela Base_Consolidada_ETL no Power BI.
+// Cada medida deve ser criada separadamente. O arquivo PBIX existente não é alterado por este texto.
+Faturamento Concluído =
+CALCULATE(
+    SUM(Base_Consolidada_ETL[faturamento_total]),
+    KEEPFILTERS(Base_Consolidada_ETL[status_pagamento] = "Concluído")
+)
+
+Vendas Concluídas =
+CALCULATE(
+    DISTINCTCOUNT(Base_Consolidada_ETL[id_venda]),
+    KEEPFILTERS(Base_Consolidada_ETL[status_pagamento] = "Concluído")
+)
+
+Ticket Médio Concluído =
+DIVIDE([Faturamento Concluído], [Vendas Concluídas])
+
+Lucro Concluído =
+CALCULATE(
+    SUM(Base_Consolidada_ETL[lucro]),
+    KEEPFILTERS(Base_Consolidada_ETL[status_pagamento] = "Concluído")
+)
